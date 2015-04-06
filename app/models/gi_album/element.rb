@@ -1,9 +1,10 @@
 module GiAlbum
   class Element
-    attr_reader :root_dir, :path
+    attr_reader :album, :root_dir, :path
 
-    def initialize(root_dir, path)
-      @root_dir = root_dir
+    def initialize(album, path)
+      @album = album
+      @root_dir = @album.root_dir
       @path = path || ''
     end
 

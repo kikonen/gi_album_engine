@@ -35,7 +35,7 @@ module GiAlbum
 
     def full_thumb_path(size)
       @full_thumb_path ||= {}
-      @full_thumb_path[size] ||= "#{root_dir}/#{thumb_path(size)}"
+      @full_thumb_path[size] ||= "#{album.thumb_dir}/#{thumb_path(size)}"
     end
 
     def image

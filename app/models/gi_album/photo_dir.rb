@@ -50,15 +50,15 @@ module GiAlbum
     def create_element(elem_path)
       elem =
         if File.directory?(full_element_path(elem_path))
-          GiAlbum::PhotoDir.new(@root_dir, elem_path)
+          GiAlbum::PhotoDir.new(album, elem_path)
         else
-          GiAlbum::Photo.new(@root_dir, elem_path)
+          GiAlbum::Photo.new(album, elem_path)
         end
       elem.valid? ? elem : nil
     end
 
     def create_photo(elem_path)
-      GiAlbum::Photo.new(@root_dir, elem_path)
+      GiAlbum::Photo.new(album, elem_path)
     end
 
     def read_thumb(size)
