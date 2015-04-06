@@ -1,0 +1,32 @@
+<div ng-controller="IndexController as index">
+<!--
+  <div class="form-group">
+    <label>Album</label>
+    <input class="form-control" ng-model="index.dir"/>
+  </div>
+-->
+  <table class="table table-striped">
+    <tr ng-if="index.dir !== ''">
+      <td>Go Up</td>
+      <td>
+        <a ng-click="index.goUp(index.dir)">
+          <%= image_tag 'gi_album/material/keyboard-backspace.svg', height: 100 %>
+        </a>
+      </td>
+    </tr>
+    <tr ng-repeat="elem in index.elements">
+      <td>{{ elem.name }}</td>
+      <td ng-if="elem.photo">
+        <a ng-href="http://kari.dy.fi/album/{{elem.path}}" target="_blank">
+          <img ng-src="thumb/{{elem.path}}" height="100"/>
+<!--          <%= image_tag 'gi_album/spinner.svg', height: 100, width: 100 %> -->
+        </a>
+      </td>
+      <td ng-if="!elem.photo">
+        <a ng-click="index.goDir(elem.path)">
+          <%= image_tag 'gi_album/material/folder.svg', height: 100 %>
+        </a>
+      </td>
+    </tr>
+  </table>
+</div>
