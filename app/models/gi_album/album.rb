@@ -4,8 +4,8 @@ module GiAlbum
 
     def initialize
       @root_dir = GiAlbum.config.album.root_dir
-      unless File.exists?(thumb_dir)
-        FileUtils.mkdir_p(thumb_dir)
+      unless File.exists?(work_dir)
+        FileUtils.mkdir_p(work_dir)
       end
     end
 
@@ -22,8 +22,8 @@ module GiAlbum
       Rails.logger
     end
 
-    def thumb_dir
-      @thumb_dir ||= "#{Rails.root}/shared/gi_album/thumbnail"
+    def work_dir
+      @work_dir ||= "#{Rails.root}/shared/gi_album"
     end
   end
 end
