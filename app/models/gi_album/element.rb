@@ -27,5 +27,9 @@ module GiAlbum
     def file_ext
       @file_ext ||= File.extname(@path)
     end
+
+    def logger
+      Rails.logger
+    end
   end
 end

@@ -14,5 +14,9 @@ module GiAlbum
       dir = GiAlbum::PhotoDir.new(@root_dir, photo_dir_path)
       dir.list
     end
+
+    def logger
+      Rails.logger
+    end
   end
 end
