@@ -2,10 +2,11 @@ PATH
   remote: .
   specs:
     gi_album_engine (0.0.1)
+      bower_vendor
       celluloid (~> 0.16.0)
       rails (~> 4.1.10)
       rails_config (>= 0.5.0.beta1)
-      rmagick
+      rmagick (~> 2.13.4)
 
 GEM
   remote: https://rubygems.org/
@@ -37,6 +38,9 @@ GEM
       thread_safe (~> 0.1)
       tzinfo (~> 1.1)
     arel (5.0.1.20140414130214)
+    awesome_print (1.6.1)
+    bower_vendor (0.0.6)
+      awesome_print
     builder (3.2.2)
     celluloid (0.16.0)
       timers (~> 4.0.0)

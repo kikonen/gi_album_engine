@@ -21,3 +21,5 @@ load 'rails/tasks/engine.rake'
 
 Bundler::GemHelper.install_tasks
 
+require 'bower_vendor'
+BowerVendor.load_tasks

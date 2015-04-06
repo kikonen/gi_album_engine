@@ -1,0 +1,4 @@
+angular-smart-table:
+  version: 2.0.1
+  assets:
+  - dist/smart-table.js
