@@ -58,10 +58,15 @@ module GiAlbum
 
       # TODO KI instead of resize, should use existing thumb data from file (EXIF)
       # if such exists
-      thumb = image.resize_to_fit(size, size)
+#      thumb = image.resize_to_fit(size, size)
+#      thumb.write(target_path)
 
       FileUtils.mkdir_p(File.dirname(target_path))
-      thumb.write(target_path)
+      cmd = "convert -thumbnail #{size}x#{size} '#{full_path}' '#{target_path}'"
+      fork do
+        exec cmd
+      end
+      Process.wait
 
       logger.info "created thumb: #{target_path}"
     end
