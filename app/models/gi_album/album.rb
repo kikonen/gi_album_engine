@@ -3,7 +3,7 @@ module GiAlbum
     attr_reader :root_dir
 
     def initialize
-      @root_dir = GiAlbum::Engine.rails_config.album.root_dir
+      @root_dir = GiAlbum.config.album.root_dir
     end
 
     def root
