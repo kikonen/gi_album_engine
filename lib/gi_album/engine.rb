@@ -10,6 +10,12 @@ end
 
 class GiAlbum::Engine
   def self.mount_path
-    "#{parent.name.underscore}"
+    "/#{parent.name.underscore}"
+  end
+end
+
+class GiAlbum::Engine
+  def self.base_href
+    "#{mount_path}/"
   end
 end

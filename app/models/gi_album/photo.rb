@@ -4,6 +4,18 @@ module GiAlbum
   class Photo < Element
     DEF_THUMB_SIZE = 64
 
+    VALID_TYPES = [
+      # images
+      /\.gif$/,
+      /\.jpg$/,
+      /\.jpeg$/,
+      /\.png$/,
+      # movies
+      /\.avi$/,
+      /\.mp4$/,
+      /\.mov$/,
+    ]
+
     def photo?
       true
     end
@@ -11,8 +23,8 @@ module GiAlbum
     def valid?
       @valid ||=
         begin
-          f = path.downcase
-          (f =~ /.jpg$/ || f =~ /\.png$/) != nil
+          p = file_ext.downcase
+          super && VALID_TYPES.any? { |pattern| p =~ pattern }
         end
     end
 
@@ -26,9 +38,15 @@ module GiAlbum
       @full_thumb_path[size] ||= "#{root_dir}/#{thumb_path(size)}"
     end
 
+    def image
+      @image ||= Magick::Image.read(full_path).first
+    end
+
+    #
+    # @return full path to thumb
+    #
     def read_thumb(size)
       create_thumb(size)
-#      open(full_thumb_path(size), "rb").read
       full_thumb_path(size)
     end
 
@@ -36,14 +54,16 @@ module GiAlbum
       target_path = full_thumb_path(size)
       return if File.exists?(target_path)
 
-      logger.info "starting: #{full_path} => #{target_path}"
-      image = Magick::Image.read(full_path).first
+      logger.info "creating thumb: #{full_path} => #{target_path}"
+
+      # TODO KI instead of resize, should use existing thumb data from file (EXIF)
+      # if such exists
       thumb = image.resize_to_fit(size, size)
 
       FileUtils.mkdir_p(File.dirname(target_path))
       thumb.write(target_path)
 
-      logger.info "done: #{target_path}"
+      logger.info "created thumb: #{target_path}"
     end
   end
 end

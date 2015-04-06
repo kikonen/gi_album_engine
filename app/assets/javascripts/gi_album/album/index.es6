@@ -4,27 +4,50 @@ class IndexController {
   constructor($scope, $http, $location) {
     var vm = this;
     vm.$location = $location;
-    vm.dir = '';
+    vm.$http = $http;
+    vm.dir = null;
     vm.elements = [];
 
-    function loadIndex() {
-      console.log("loading...");
-      vm.dir = $location.url();
-      $http
-        .get('api/photo/index', { params: { dir: vm.dir } })
-        .then((resp) => {
-          console.log(resp.data);
-          vm.elements = resp.data;
-        });
-    }
-
-    $scope.$watch(() => $location.url(), loadIndex);
+    $scope.$watch(() => $location.url(), () => vm.updateDir());
+    $scope.$watch(() => vm.dir , () => vm.updateLocation());
+    vm.updateDir();
   }
 
-  changeDir(path) {
-    console.log(path);
-    this.$location.url(path);
-    this.dir = path;
+  loadIndex() {
+    console.log("loading..." + this.dir);
+
+    this.$http
+      .get('api/photo/index', { params: { dir: this.dir } })
+      .then((resp) => {
+        this.elements = resp.data;
+        console.log("count: " + this.elements.length);
+      });
+  }
+
+  goUp(path) {
+    var parts = _.chain(path.split('/')).compact().initial(),
+        parentPath = parts.join('/');
+    console.log(parts);
+    console.log(parentPath);
+
+    this.$location.url('/ui/' + parentPath);
+  }
+
+  goDir(path) {
+    this.$location.url('/ui/' + path);
+  }
+
+  updateLocation() {
+    this.goDir(this.dir);
+    this.loadIndex();
+  }
+
+  updateDir() {
+    var dir = this.$location.url();
+    dir = dir.slice(4, dir.length);
+    if (dir !== this.dir) {
+      this.dir = dir;
+    }
   }
 }
 

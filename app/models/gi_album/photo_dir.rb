@@ -19,11 +19,16 @@ module GiAlbum
     end
 
     def valid?
-      p = path.downcase
-      HIDDEN_DIRS.none? { |pattern| p =~ pattern }
+      @valid ||=
+        begin
+          p = path.downcase
+          super && HIDDEN_DIRS.none? { |pattern| p =~ pattern }
+        end
     end
 
     def list
+      return [] unless valid?
+
       glob = "#{full_path}/*"
       elements = Dir[glob]
         .map do |f|

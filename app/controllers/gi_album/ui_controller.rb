@@ -3,7 +3,7 @@ module GiAlbum
     layout 'gi_album/engine'
 
     def index
-      @base_href = "#{GiAlbum::Engine.mount_path}/"
+      @base_href = GiAlbum::Engine.base_href
     end
   end
 end

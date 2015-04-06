@@ -7,12 +7,17 @@ module GiAlbum
       @path = path || ''
     end
 
+    def valid?
+      # NOTE KI reduce changes of accessing files outside of album
+      full_path.start_with?(@root_dir)
+    end
+
     def name
       @name ||= File.basename(@path)
     end
 
     def full_path
-      @full_path ||= @path.empty? ? "#{@root_dir}" : "#{@root_dir}/#{@path}"
+      @full_path ||= File.absolute_path(@path.empty? ? "#{@root_dir}" : "#{@root_dir}/#{@path}")
     end
 
     def base_path
