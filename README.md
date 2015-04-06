@@ -1,1 +1,7 @@
-# gi_album_engine
+# Photo Album
+
+## Demo
+
+Live demo
+
+http://host.kari.dy.fi/gi_album/ui
