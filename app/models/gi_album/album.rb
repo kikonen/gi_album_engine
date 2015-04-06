@@ -23,7 +23,7 @@ module GiAlbum
     end
 
     def thumb_dir
-      @thumb_dir ||= "#{Rails.root}/tmp/thumbnail"
+      @thumb_dir ||= "#{Rails.root}/shared/gi_album/thumbnail"
     end
   end
 end
