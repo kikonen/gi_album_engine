@@ -47,7 +47,10 @@ module GiAlbum
     #
     def read_thumb(size)
       create_thumb(size)
-      full_thumb_path(size)
+      {
+        full_path: full_thumb_path(size),
+        content_type: "image/#{file_ext[1,file_ext.length].downcase}"
+      }
     end
 
     def create_thumb(size)

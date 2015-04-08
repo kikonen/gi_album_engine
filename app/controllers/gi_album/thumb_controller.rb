@@ -2,10 +2,10 @@ module GiAlbum
   class ThumbController < ::ApiController
     def show
       elem = album.root.create_element(params[:path])
-      full_thumb_path = elem.read_thumb(GiAlbum::Photo::DEF_THUMB_SIZE)
+      thumb = elem.read_thumb(GiAlbum::Photo::DEF_THUMB_SIZE)
       send_file(
-        full_thumb_path,
-        type: 'image/svg',
+        thumb[:full_path],
+        type: thumb[:content_type],
         disposition: 'inline')
     end
 
