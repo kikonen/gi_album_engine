@@ -10,6 +10,9 @@
 // Read Sprockets README (https://github.com/rails/sprockets#sprockets-directives) for details
 // about supported directives.
 //
-//=require ./boot
 //=require_self
-System.get('gi_album/boot');
+"use strict";
+jQuery(function() {
+  System.get('gi_album/album/module');
+  angular.bootstrap(document, ['album']);
+});

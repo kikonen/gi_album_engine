@@ -9,6 +9,18 @@ import shared from 'ng/module';
 angular.module("album", [
   shared.name,
   'smart-table',
-]);
+])
+.config(($stateProvider) => {
+  $stateProvider
+    .state(
+      'root',
+      {
+        abstract: true,
+        templateUrl: 'templates/root'
+      });
+})
+.run(($state) => {
+  $state.go('root.index');
+});
 
-import index from './index';
+import IndexController from './index';
