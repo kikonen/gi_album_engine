@@ -17,7 +17,7 @@
         </tr>
       </thead>
 
-      <tr ng-if="index.dir !== ''">
+      <tr ng-if="index.dir.length > 1">
         <td>Go Up</td>
         <td>
           <a ng-click="index.goUp(index.dir)">

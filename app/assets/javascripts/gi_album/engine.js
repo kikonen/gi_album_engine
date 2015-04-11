@@ -14,5 +14,7 @@
 "use strict";
 jQuery(function() {
   System.get('gi_album/album/module');
-  angular.bootstrap(document, ['album']);
+  // NOTE KI not using @ng_app due to dependency order cycle in es6 module logic
+  // => need to tune logic to avoid this
+  angular.bootstrap(document, ['album'], { strictDi: Rails.strictId });
 });
