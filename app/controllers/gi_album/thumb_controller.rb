@@ -3,6 +3,8 @@ module GiAlbum
     def show
       elem = album.root.create_element(params[:path])
       thumb = elem.read_thumb(GiAlbum::Photo::DEF_THUMB_SIZE)
+
+      response.headers["Expires"] = CGI.rfc1123_date(Time.now + 365.days)
       send_file(
         thumb[:full_path],
         type: thumb[:content_type],
