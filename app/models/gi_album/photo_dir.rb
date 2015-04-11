@@ -10,8 +10,11 @@ module GiAlbum
       /work/,
     ]
 
-    def self.full_folder_icon_path
-      @full_folder_icon_path ||= "#{GiAlbum.gem_root_dir}/app/assets/images/gi_album/material/folder.svg"
+    def self.thumb
+      @thumb ||= {
+        full_path: "#{GiAlbum.gem_root_dir}/app/assets/images/gi_album/material/folder.svg",
+        content_type: 'image/svg',
+      }
     end
 
     def photo?
@@ -62,7 +65,7 @@ module GiAlbum
     end
 
     def read_thumb(size)
-      self.class.full_folder_icon_path
+      self.class.thumg
     end
 
     private

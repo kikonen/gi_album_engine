@@ -10,6 +10,11 @@
 // Read Sprockets README (https://github.com/rails/sprockets#sprockets-directives) for details
 // about supported directives.
 //
-//=require ./boot
 //=require_self
-System.get('gi_album/boot');
+"use strict";
+jQuery(function() {
+  System.get('gi_album/album/module');
+  // NOTE KI not using @ng_app due to dependency order cycle in es6 module logic
+  // => need to tune logic to avoid this
+  angular.bootstrap(document, ['album'], { strictDi: Rails.strictId });
+});

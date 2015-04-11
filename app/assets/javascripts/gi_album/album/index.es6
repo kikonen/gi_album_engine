@@ -1,5 +1,7 @@
 "use strict";
 
+const BASE_URL = '';// /ui/index/';
+
 class IndexController {
   constructor($scope, $http, $location) {
     var vm = this;
@@ -30,11 +32,11 @@ class IndexController {
     console.log(parts);
     console.log(parentPath);
 
-    this.$location.url('/ui/' + parentPath);
+    this.$location.url(BASE_URL + parentPath);
   }
 
   goDir(path) {
-    this.$location.url('/ui/' + path);
+    this.$location.url(BASE_URL + path);
   }
 
   updateLocation() {
@@ -44,7 +46,8 @@ class IndexController {
 
   updateDir() {
     var dir = this.$location.url();
-    dir = dir.slice(4, dir.length);
+    console.log(dir);
+    dir = dir.slice(BASE_URL.length, dir.length);
     if (dir !== this.dir) {
       this.dir = dir;
     }
@@ -52,4 +55,15 @@ class IndexController {
 }
 
 export default angular.module('album')
-.controller('IndexController', IndexController);
+.controller('IndexController', IndexController)
+.config(($stateProvider) => {
+  $stateProvider
+    .state(
+      'root.index',
+      {
+        url: '/{path:.*}',
+        templateUrl: 'templates/index',
+        controller: IndexController,
+        controllerAs: 'index'
+      });
+});
