@@ -14,15 +14,19 @@
  *= require_self
  */
 
-table-fixed {
+gi-table-fixed {
   table-layout: fixed;
 }
 
-table-fixed th:nth-child(1), td:nth-child(1) {
+gi-table-fixed th:nth-child(1), td:nth-child(1) {
   overflow: hidden;
   width: 50%;
 }
-table-fixed th:nth-child(2), td:nth-child(2) {
+gi-table-fixed th:nth-child(2), td:nth-child(2) {
   overflow: hidden;
   width: 50%;
+}
+
+.gi-btn-pagination {
+  width: 3em;
 }
