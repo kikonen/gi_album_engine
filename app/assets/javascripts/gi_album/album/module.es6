@@ -11,15 +11,6 @@ angular.module("album", [
   'smart-table',
 ])
 .config(($stateProvider) => {
-  // $urlRouterProvider
-  //   .otherwise(function($injector, $location) {
-  //     if (Rails.development) {
-  //       console.debug("Route Not found: " + $location.absUrl());
-  //     }
-  //     // NOTE KI allow jumping outside of current routing context
-  //     window.location = $location.absUrl();
-  //   });
-
   $stateProvider
     .state(
       'root',
@@ -27,9 +18,6 @@ angular.module("album", [
         abstract: true,
         templateUrl: 'templates/root'
       });
-})
-.run(($state) => {
-  $state.go('root.index');
 });
 
 import IndexController from './index';
