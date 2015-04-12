@@ -16,6 +16,10 @@ module GiAlbum
       /\.mov$/,
     ]
 
+    MIME_TYPES = {
+      'jpg' => 'image/jpeg',
+    }
+
     def photo?
       true
     end
@@ -25,6 +29,16 @@ module GiAlbum
         begin
           p = file_ext.downcase
           super && VALID_TYPES.any? { |pattern| p =~ pattern }
+        end
+    end
+
+    def mime_type
+      @mime_type =
+        begin
+          type = MIME_TYPES[plain_ext]
+          ap type
+          type = "image/#{plain_ext}" unless type
+          type
         end
     end
 
@@ -49,7 +63,7 @@ module GiAlbum
       create_thumb(size)
       {
         full_path: full_thumb_path(size),
-        content_type: "image/#{file_ext[1,file_ext.length].downcase}"
+        content_type: mime_type
       }
     end
 

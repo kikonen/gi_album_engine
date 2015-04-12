@@ -25,6 +25,10 @@ module GiAlbum
       @base_path ||= @path[0..-(file_ext.length + 1)]
     end
 
+    def plain_ext
+      @plain_ext ||= file_ext[1, file_ext.length].downcase
+    end
+
     def file_ext
       @file_ext ||= File.extname(@path)
     end
