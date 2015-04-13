@@ -14,6 +14,15 @@
  *= require_self
  */
 
+/*
+ * HACK KI show scrollbar always to avoid jumping (not very optimal solution, but
+ * should temporarily fix flickering)
+ */
+html {
+  overflow: -moz-scrollbars-vertical;
+  overflow: scroll;
+}
+
 gi-table-fixed {
   table-layout: fixed;
 }

@@ -20,4 +20,4 @@ angular.module("album", [
       });
 });
 
-import IndexController from './index';
+import {} from './index';

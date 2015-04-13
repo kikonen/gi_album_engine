@@ -1,12 +1,13 @@
 "use strict";
 
-const BASE_URL = '';// /ui/index/';
+const BASE_URL = '';
 
 class IndexController {
-  constructor($scope, $http, $location) {
+  constructor($scope, $http, $location, Breadcrumb) {
     var vm = this;
     vm.$location = $location;
     vm.$http = $http;
+    vm.Breadcrumb = Breadcrumb;
     vm.dir = null;
     vm.elements = [];
 
@@ -16,7 +17,7 @@ class IndexController {
   }
 
   loadIndex() {
-    console.log("loading..." + this.dir);
+    console.log("loading... " + this.dir);
 
     this.$http
       .get('api/photo/index', { params: { dir: this.dir } })
@@ -44,17 +45,45 @@ class IndexController {
     this.loadIndex();
   }
 
+  // Update current dir based into current url
   updateDir() {
-    var dir = this.$location.url();
-    console.log(dir);
-    dir = dir.slice(BASE_URL.length, dir.length);
+    let url = decodeURIComponent(this.$location.url());
+    console.log("url: " + url);
+    let dir = url.slice(BASE_URL.length, url.length);
+    if (dir === '/') {
+      dir = '';
+    }
     if (dir !== this.dir) {
       this.dir = dir;
+      this.updateCrumbs();
     }
+  }
+
+  // Show current album path as breadcrumbs
+  updateCrumbs() {
+    console.log(this.dir);
+    let elements = this.dir.split('/'),
+        pathPrefix = '/gi_album',
+        path = _.map(elements, (elem) => {
+          if (elem === '') {
+            return {
+              name: 'Home',
+              url: '/gi_album'
+            };
+          } else {
+            let prefix = pathPrefix;
+            pathPrefix = pathPrefix + '/' + elem;
+            return {
+              name: elem,
+              url: prefix + '/' + elem
+            };
+          }
+        });
+    this.Breadcrumb.setPath(path);
   }
 }
 
-export default angular.module('album')
+angular.module('album')
 .controller('IndexController', IndexController)
 .config(($stateProvider) => {
   $stateProvider
