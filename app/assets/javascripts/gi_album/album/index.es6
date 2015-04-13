@@ -62,7 +62,7 @@ export default angular.module('album')
       'root.index',
       {
         url: '/{path:.*}',
-        templateUrl: 'templates/index',
+        templateUrl: 'gi_album/album/index',
         controller: IndexController,
         controllerAs: 'index'
       });
