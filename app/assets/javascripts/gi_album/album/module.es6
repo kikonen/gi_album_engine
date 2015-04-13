@@ -16,7 +16,7 @@ angular.module("album", [
       'root',
       {
         abstract: true,
-        templateUrl: 'templates/root'
+        templateUrl: 'gi_album/album/root'
       });
 });
 

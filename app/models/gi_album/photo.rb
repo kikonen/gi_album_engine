@@ -36,7 +36,6 @@ module GiAlbum
       @mime_type =
         begin
           type = MIME_TYPES[plain_ext]
-          ap type
           type = "image/#{plain_ext}" unless type
           type
         end

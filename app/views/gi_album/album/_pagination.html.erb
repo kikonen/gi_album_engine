@@ -1,0 +1,15 @@
+<div ng-if="pages.length >= 2">
+  <div class="btn-group">
+    <button class="btn btn-default" ng-click="selectPage(1)">First</button>
+    <button class="btn btn-default" ng-click="selectPage(currentPage - 1)">&lt;</button>
+    <button
+        class="btn gi-btn-pagination"
+        ng-class="{'btn-primary': currentPage === page, 'btn-default': currentPage !== page}"
+        ng-repeat="page in pages"
+        ng-click="selectPage(page)">
+      {{page}}
+    </button>
+    <button class="btn btn-default" ng-click="selectPage(currentPage + 1)">&gt;</button>
+    <button class="btn btn-default" ng-click="selectPage(numPages)">Last</button>
+  </ul>
+</div>
