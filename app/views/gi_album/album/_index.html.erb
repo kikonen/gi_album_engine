@@ -17,27 +17,33 @@
       </tr>
     </thead>
 
-    <tr ng-if="index.dir.length > 1">
-      <td>Go Up</td>
-      <td>
-        <a ng-click="index.goUp(index.dir)">
-          <%= image_tag 'gi_album/material/keyboard-backspace.svg', height: 100 %>
-        </a>
-      </td>
-    </tr>
+    <tr>
+      <td colspan="2">
+        <div class="gi-thumb gi-thumb-dir"
+             ng-if="index.dir.length > 1">
+          <a ng-click="index.goUp(index.dir)">
+            <%= image_tag 'gi_album/material/keyboard-backspace.svg', class: 'gi-thumb-image' %>
+          </a>
+        </div>
 
-    <tr ng-repeat="elem in displayedElements">
-      <td >{{ elem.name }}</td>
-      <td ng-if="elem.photo">
-        <a ng-href="http://kari.dy.fi/album/{{elem.path}}" target="_blank">
-          <img ng-src="thumb/{{elem.path}}" height="100"/>
-          <!--          <%= image_tag 'gi_album/spinner.svg', height: 100, width: 100 %> -->
-        </a>
-      </td>
-      <td ng-if="!elem.photo">
-        <a ng-click="index.goDir(elem.path)">
-          <%= image_tag 'gi_album/material/folder.svg', height: 100 %>
-        </a>
+        <div class="gi-thumb"
+             ng-class="{'gi-thumb-photo':elem.photo, 'gi-thumb-dir':!elem.photo}"
+             ng-repeat="elem in displayedElements track by elem.name">
+          <span>{{ elem.name }}</span>
+
+          <span ng-if="!elem.photo">
+            <a ng-click="index.goDir(elem.path)">
+              <%= image_tag 'gi_album/material/folder.svg', class: 'gi-thumb-image' %>
+            </a>
+          </span>
+
+          <span ng-if="elem.photo">
+            <a ng-href="http://kari.dy.fi/album/{{elem.path}}" target="_blank">
+              <img class="gi-thumb-image" ng-src="thumb/{{elem.path}}""/>
+              <!--          <%= image_tag 'gi_album/spinner.svg', height: 100, width: 100 %> -->
+            </a>
+          </span>
+        </div>
       </td>
     </tr>
 
