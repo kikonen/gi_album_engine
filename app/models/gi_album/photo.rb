@@ -20,6 +20,17 @@ module GiAlbum
       'jpg' => 'image/jpeg',
     }
 
+    attr_accessor :image_info
+
+
+    def initialize(album, path)
+      super
+      @image_info = {
+        format: 'NA',
+        size: '0x0',
+      }
+    end
+
     def photo?
       true
     end
@@ -85,6 +96,44 @@ module GiAlbum
       Process.wait
 
       logger.info "created thumb: #{target_path}"
+    end
+
+
+    #
+    # Fetch and fill image info for photos as batch operation
+    #
+    # PARSED FORMAT:
+    # identify /mnt/share/Photos/album/kari.jpg /mnt/share/Photos/album/kari_1.jpg /mnt/share/Photos/album/kari_5.jpg
+    # /mnt/share/Photos/album/kari.jpg JPEG 476x499 476x499+0+0 8-bit sRGB 42.8KB 0.000u 0:00.000
+    # /mnt/share/Photos/album/kari_1.jpg[1] JPEG 488x485 488x485+0+0 8-bit sRGB 20KB 0.000u 0:00.000
+    #/mnt/share/Photos/album/kari_5.jpg[2] JPEG 500x477 500x477+0+0 8-bit sRGB 165KB 0.010u 0:00.009
+
+    def self.fill_image_info(all_photos)
+      all_photos.each_slice(50) do |photos|
+        by_path = photos.index_by(&:full_path)
+        query_paths = '"' + photos.map(&:full_path).join('" "') + '"'
+        cmd = "identify #{query_paths}"
+        result = `#{cmd}`
+
+        result.each_line do |line|
+          data = line.split(' ')
+          path = data[0].split('[').first
+          puts path => data
+          photo = by_path[path]
+          if photo
+            photo.image_info = {
+              format: data[1],
+              size: data[2]
+            }
+          else
+            ::Rails.logger.info "Not found: #{line}"
+          end
+        end
+      end
+      all_photos
+    rescue => e
+      # If parsing fails; just ignore problem for now
+      logger.error e
     end
   end
 end

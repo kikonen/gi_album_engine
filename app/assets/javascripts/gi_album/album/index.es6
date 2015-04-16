@@ -17,21 +17,21 @@ class IndexController {
   }
 
   loadIndex() {
-    console.log("loading... " + this.dir);
+    console.debug("loading... " + this.dir);
 
     this.$http
       .get('api/photo/index', { params: { dir: this.dir } })
       .then((resp) => {
         this.elements = resp.data;
-        console.log("count: " + this.elements.length);
+        console.debug("count: " + this.elements.length);
       });
   }
 
   goUp(path) {
     var parts = _.chain(path.split('/')).compact().initial(),
         parentPath = parts.join('/');
-    console.log(parts);
-    console.log(parentPath);
+    console.debug(parts);
+    console.debug(parentPath);
 
     this.$location.url(BASE_URL + parentPath);
   }
@@ -48,7 +48,7 @@ class IndexController {
   // Update current dir based into current url
   updateDir() {
     let url = decodeURIComponent(this.$location.url());
-    console.log("url: " + url);
+    console.debug("url: " + url);
     let dir = url.slice(BASE_URL.length, url.length);
     if (dir === '/') {
       dir = '';
@@ -61,7 +61,7 @@ class IndexController {
 
   // Show current album path as breadcrumbs
   updateCrumbs() {
-    console.log(this.dir);
+    console.debug(this.dir);
     let elements = this.dir.split('/'),
         pathPrefix = '/gi_album',
         path = _.map(elements, (elem) => {

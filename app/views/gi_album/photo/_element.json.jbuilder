@@ -10,4 +10,5 @@ if element.photo?
   json.thumb_path element.thumb_path GiAlbum::Photo::DEF_THUMB_SIZE
   json.width 100
   json.height 100
+  json.image_info element.image_info
 end

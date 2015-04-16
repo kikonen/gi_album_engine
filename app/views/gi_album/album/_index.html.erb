@@ -43,7 +43,9 @@
               <!--          <%= image_tag 'gi_album/spinner.svg', height: 100, width: 100 %> -->
             </a>
             <div class="gi-thumb-info">
-              <span>{{ elem.display_name }}</span>
+              <div>{{ elem.display_name }}</div>
+              <div>{{ elem.image_info.format }}</div>
+              <div>{{ elem.image_info.size }}</div>
             </div>
           </div>
         </div>
