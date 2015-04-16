@@ -1,4 +1,8 @@
+name = element.name
+name = name[0, name.index('.') || name.length].humanize
+
 json.name element.name
+json.display_name name
 json.photo element.photo?
 json.path element.path
 

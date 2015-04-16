@@ -33,7 +33,7 @@
                ng-click="index.goDir(elem.path)">
             <%= image_tag 'gi_album/material/folder.svg', class: 'gi-thumb-image' %>
             <div class="gi-thumb-info">
-              <span>{{ elem.name }}</span>
+              <span>{{ elem.display_name }}</span>
             </div>
           </div>
 
@@ -43,7 +43,7 @@
               <!--          <%= image_tag 'gi_album/spinner.svg', height: 100, width: 100 %> -->
             </a>
             <div class="gi-thumb-info">
-              <span>{{ elem.name }}</span>
+              <span>{{ elem.display_name }}</span>
             </div>
           </div>
         </div>
