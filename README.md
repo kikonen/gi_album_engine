@@ -4,4 +4,4 @@
 
 Live demo
 
-http://host.kari.dy.fi/gi_album/ui
+http://host.kari.dy.fi/gi_album
