@@ -46,7 +46,7 @@ module GiAlbum
       photos = elements
         .select { |e| e.photo? }
         .sort { |a,b| a.name <=> b.name }
-      GiAlbum::Photo.fill_image_info(photos)
+#      GiAlbum::Photo.fill_image_info(photos)
 
       dirs + photos
     end
