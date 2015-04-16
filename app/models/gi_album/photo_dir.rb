@@ -17,8 +17,8 @@ module GiAlbum
       }
     end
 
-    def photo?
-      false
+    def dir?
+      true
     end
 
     def valid?
@@ -40,25 +40,24 @@ module GiAlbum
       end.compact
 
       dirs = elements
-        .select { |e| !e.photo? }
+        .select { |e| e.dir? }
         .sort { |a,b| a.name <=> b.name }
 
       photos = elements
-        .select { |e| e.photo? }
+        .select { |e| e.photo? || e.video? }
         .sort { |a,b| a.name <=> b.name }
 #      GiAlbum::Photo.fill_image_info(photos)
 
       dirs + photos
     end
 
+    #
+    # @return Created element, nil if not valid element
+    #
     def create_element(elem_path)
-      elem =
-        if File.directory?(full_element_path(elem_path))
-          GiAlbum::PhotoDir.new(album, elem_path)
-        else
-          GiAlbum::Photo.new(album, elem_path)
-        end
-      elem.valid? ? elem : nil
+      cls = GiAlbum::Element.get(full_element_path(elem_path))
+      elem = cls ? cls.new(album, elem_path) : nil
+      elem && elem.valid? ? elem : nil
     end
 
     def create_photo(elem_path)
