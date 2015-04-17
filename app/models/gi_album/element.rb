@@ -24,7 +24,6 @@ module GiAlbum
         GiAlbum::PhotoDir
       else
         register_all if types.empty?
-        ap t: types, ext: File.extname(full_path).downcase
         types[File.extname(full_path).downcase]
       end
     end
