@@ -5,15 +5,10 @@ module GiAlbum
     DEF_THUMB_SIZE = 64
 
     VALID_TYPES = [
-      # images
-      /\.gif$/,
-      /\.jpg$/,
-      /\.jpeg$/,
-      /\.png$/,
-      # movies
-      /\.avi$/,
-      /\.mp4$/,
-      /\.mov$/,
+      '.gif',
+      '.jpg',
+      '.jpeg',
+      '.png',
     ]
 
     MIME_TYPES = {
@@ -39,7 +34,7 @@ module GiAlbum
       @valid ||=
         begin
           p = file_ext.downcase
-          super && VALID_TYPES.any? { |pattern| p =~ pattern }
+          super && VALID_TYPES.any? { |ext| ext == p }
         end
     end
 
