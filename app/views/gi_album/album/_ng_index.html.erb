@@ -28,7 +28,7 @@
         </div>
 
         <div class="gi-thumb"
-             ng-class="{'gi-thumb-photo':elem.photo, 'gi-thumb-dir':!elem.photo}"
+             ng-class="{'gi-thumb-photo':elem.photo || elem.video, 'gi-thumb-dir':elem.dir}"
              ng-repeat="elem in displayedElements track by elem.name">
 
           <div ng-if="elem.dir"
@@ -42,24 +42,25 @@
           <div ng-if="elem.photo">
             <a ng-href="http://kari.dy.fi/album/{{elem.path}}" target="_blank">
               <img class="gi-thumb-image" ng-src="thumb/{{elem.path}}"/>
-              <!--          <%= image_tag 'gi_album/spinner.svg', height: 100, width: 100 %> -->
             </a>
+<!--
             <div class="gi-thumb-info">
               <div>{{ elem.display_name }}</div>
-<!--
               <div>{{ elem.image_info.format }}</div>
               <div>{{ elem.image_info.size }}</div>
--->
             </div>
+-->
           </div>
 
           <div ng-if="elem.video">
             <a ng-href="http://kari.dy.fi/album/{{elem.path}}" target="_blank">
               <%= image_tag 'gi_album/material/movie.svg', class: 'gi-thumb-image' %>
             </a>
+<!--
             <div class="gi-thumb-info">
               <div>{{ elem.display_name }}</div>
             </div>
+-->
           </div>
         </div>
       </td>
