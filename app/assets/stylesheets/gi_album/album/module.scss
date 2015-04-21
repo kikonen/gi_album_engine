@@ -17,6 +17,7 @@ body {
 
 .gi-album-container {
   padding: 0;
+  position: relative;
 }
 
 .gi-album-table {
@@ -39,6 +40,7 @@ body {
   height: 140px;
 
   color: black;
+  overflow: hidden;
 
   transition-duration: 0.2s;
 }
@@ -137,4 +139,34 @@ body {
 
 .gi-thumb-image {
   height: 100px;
+}
+
+.gi-photo-preview {
+  box-sizing: border-box;
+
+  background-color: rgba(0, 0, 0, 0.5);
+  background: solid;
+  position: fixed;
+  display: block;
+  top: 10%;
+  left: 1%;
+  right: 1%;
+  bottom: 10%;
+  z-index: 1000;
+
+  border-top-left-radius: 25px;
+  border-top-right-radius: 25px;
+  border-bottom-left-radius: 25px;
+  border-bottom-right-radius: 25px;
+  border-color: black;
+  border-style: solid;
+
+  padding-left: 15px;
+  padding-top: 15px;
+  overflow: hidden;
+}
+
+.gi-photo-preview img {
+  display: block;
+  height: 100%;
 }

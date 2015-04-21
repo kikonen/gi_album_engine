@@ -10,6 +10,7 @@ class IndexController {
     vm.Breadcrumb = Breadcrumb;
     vm.dir = null;
     vm.elements = [];
+    vm.photo = null;
 
     $scope.$watch(() => $location.url(), () => vm.updateDir());
     $scope.$watch(() => vm.dir , () => vm.updateLocation());
@@ -22,6 +23,7 @@ class IndexController {
     this.$http
       .get('api/photo/index', { params: { dir: this.dir } })
       .then((resp) => {
+        this.photo = null;
         this.elements = resp.data;
         console.debug("count: " + this.elements.length);
       });
@@ -39,6 +41,18 @@ class IndexController {
   goDir(path) {
     this.$location.url(BASE_URL + path);
   }
+
+  setPhoto(photo, event) {
+    if (this.photo == photo) {
+      this.photo = null;
+    } else {
+      this.photo = photo;
+    }
+    if (event) {
+      event.stopPropagation();
+    }
+  }
+
 
   updateLocation() {
     this.goDir(this.dir);
@@ -80,6 +94,13 @@ class IndexController {
           }
         });
     this.Breadcrumb.setPath(path);
+  }
+
+  onKeydown(event) {
+    console.log("key = " + event.keyCode);
+    if (event.keyCode === 27) {
+      this.setPhoto(null);
+    }
   }
 }
 

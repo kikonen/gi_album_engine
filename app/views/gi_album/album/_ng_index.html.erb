@@ -1,5 +1,7 @@
-<div>
-  <table st-table="displayedElements" st-safe-src="index.elements" class="table gi-album-table">
+<div ng-click="index.setPhoto(null)"
+     ng-keydown="index.onKeydown($event)"
+     tabindex="0">
+  <table ng-click="index.setPhoto(null)" st-table="displayedElements" st-safe-src="index.elements" class="table gi-album-table">
     <thead>
       <tr>
 	<td colspan="2" class="text-center">
@@ -40,10 +42,14 @@
             </div>
           </div>
 
-          <div ng-if="elem.photo">
+          <div ng-if="elem.photo"
+              ng-click="index.setPhoto(elem, $event)">
+            <img class="gi-thumb-image" ng-src="thumb/<%= GiAlbum::Photo::DEF_THUMB_SIZE %>/{{elem.path}}"/>
+<!--
             <a ng-href="http://kari.dy.fi/album/{{elem.path}}" target="_blank">
               <img class="gi-thumb-image" ng-src="thumb/{{elem.path}}"/>
             </a>
+-->
 <!--
             <div class="gi-thumb-info">
               <div>{{ elem.display_name }}</div>
@@ -80,4 +86,12 @@
     </tfoot>
 -->
   </table>
+</div>
+
+<div
+    class="gi-photo-preview"
+    ng-if="index.photo"
+    ng-click="index.setPhoto(null, $event)">
+  <img ng-src="thumb/400/{{index.photo.path}}"/>
+  <a ng-href="http://kari.dy.fi/album/{{index.photo.path}}" target="_blank">Open Original</a>
 </div>
