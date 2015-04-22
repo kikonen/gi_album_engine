@@ -37,8 +37,9 @@
                ng-if="elem.dir"
                ng-click="index.goDir(elem.path)">
             <%= image_tag 'gi_album/material/folder-photo.svg', class: 'gi-thumb-image' %>
+
             <div class="gi-thumb-info">
-              <span>{{ elem.display_name }}</span>
+              <div class="gi-thumb-text">{{ elem.display_name }}</div>
             </div>
           </div>
 
