@@ -11,7 +11,7 @@ class IndexController {
     vm.dir = null;
     vm.elements = [];
     vm.photo = null;
-    vm.rows = 4;
+    vm.rows = 20;
     vm.thumb = null;
 
     $scope.$watch(() => $location.url(), () => vm.updateDir());
