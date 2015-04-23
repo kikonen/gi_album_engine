@@ -81,7 +81,7 @@ class IndexController {
         path = _.map(elements, (elem) => {
           if (elem === '') {
             return {
-              name: 'Home',
+              name: 'Album',
               url: '/gi_album'
             };
           } else {
@@ -93,6 +93,10 @@ class IndexController {
             };
           }
         });
+    path.unshift({
+      name: 'Home',
+      url: '/'
+    });
     this.Breadcrumb.setPath(path);
   }
 
