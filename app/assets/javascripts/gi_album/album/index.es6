@@ -11,6 +11,8 @@ class IndexController {
     vm.dir = null;
     vm.elements = [];
     vm.photo = null;
+    vm.rows = 4;
+    vm.thumb = null;
 
     $scope.$watch(() => $location.url(), () => vm.updateDir());
     $scope.$watch(() => vm.dir , () => vm.updateLocation());
@@ -106,6 +108,14 @@ class IndexController {
       this.setPhoto(null);
     }
   }
+
+  onSwipeleft(event) {
+    this.thumb.onSwipeLeft(event);
+  }
+
+  onSwipeRight(event) {
+    this.thumb.onSwipeRight(event);
+  }
 }
 
 angular.module('album')
@@ -120,4 +130,30 @@ angular.module('album')
         controller: IndexController,
         controllerAs: 'index'
       });
+})
+.directive('giThumb', function () {
+  return {
+    restrict: 'A',
+    require: '^stTable',
+    scope: {
+      stItemsByPage: '=?'
+    },
+    link: function (scope, element, attrs, ctrl) {
+      scope.$parent.index.thumb = scope;
+
+      var paginationState = ctrl.tableState().pagination;
+
+      scope.onSwipeleft = function() {
+        var start = paginationState.start - scope.stItemsByPage;
+        if (start < 0) {
+          start = 0;
+        }
+        ctrl.slice(start, scope.stItemsByPage);
+      };
+
+      scope.onSwipeRight = function() {
+        ctrl.slice(paginationState.start + scope.stItemsByPage, scope.stItemsByPage);
+      };
+    }
+  };
 });

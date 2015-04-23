@@ -1,24 +1,28 @@
-<div ng-click="index.setPhoto(null)"
+<div class="gi-full-height"
+     ng-click="index.setPhoto(null)"
      ng-keydown="index.onKeydown($event)"
+     ng-swipe-left="index.onSwipeLeft($event)"
+     ng-swipe-right="index.onSwipeRight($event)"
      tabindex="0">
-  <table ng-click="index.setPhoto(null)" st-table="displayedElements" st-safe-src="index.elements" class="table gi-album-table">
+  <table
+      ng-click="index.setPhoto(null)"
+      st-table="displayedElements"
+      st-safe-src="index.elements"
+      class="table gi-album-table">
     <thead>
       <tr>
 	<td colspan="2" class="text-center">
+          <div gi-thumb=""
+               st-items-by-page="index.rows">
+          </div>
 	  <div st-pagination=""
-               st-items-by-page="25"
+               st-items-by-page="index.rows"
                st-displayed-pages="10"
-               st-template="gi_album/album/pagination">
+               st-template="gi_album/album/pagination"
+               >
           </div>
 	</td>
       </tr>
-<!--
-      <tr>
-	<th colspan="2">
-          <input st-search="" class="form-control" placeholder="search ..." type="text"/>
-        </th>
-      </tr>
--->
     </thead>
 
     <tr>
@@ -47,11 +51,6 @@
               ng-click="index.setPhoto(elem, $event)">
             <img class="gi-thumb-image" ng-src="thumb/<%= GiAlbum::Photo::DEF_THUMB_SIZE %>/{{elem.path}}"/>
 <!--
-            <a ng-href="http://kari.dy.fi/album/{{elem.path}}" target="_blank">
-              <img class="gi-thumb-image" ng-src="thumb/{{elem.path}}"/>
-            </a>
--->
-<!--
             <div class="gi-thumb-info">
               <div>{{ elem.display_name }}</div>
               <div>{{ elem.image_info.format }}</div>
@@ -73,19 +72,6 @@
         </div>
       </td>
     </tr>
-<!--
-    <tfoot>
-      <tr>
-	<td colspan="2" class="text-center">
-	  <div st-pagination=""
-               st-items-by-page="20"
-               st-displayed-pages="10"
-               st-template="gi_album/album/pagination">
-          </div>
-	</td>
-      </tr>
-    </tfoot>
--->
   </table>
 </div>
 
