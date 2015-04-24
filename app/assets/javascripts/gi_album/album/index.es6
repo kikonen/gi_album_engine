@@ -109,12 +109,12 @@ class IndexController {
     }
   }
 
-  onSwipeleft(event) {
-    this.thumb.onSwipeLeft(event);
+  onSwipeLeft() {
+    this.thumb.onSwipeLeft();
   }
 
-  onSwipeRight(event) {
-    this.thumb.onSwipeRight(event);
+  onSwipeRight() {
+    this.thumb.onSwipeRight();
   }
 }
 
@@ -143,16 +143,16 @@ angular.module('album')
 
       var paginationState = ctrl.tableState().pagination;
 
-      scope.onSwipeleft = function() {
+      scope.onSwipeLeft = function() {
+        ctrl.slice(paginationState.start + scope.stItemsByPage, scope.stItemsByPage);
+      };
+
+      scope.onSwipeRight = function() {
         var start = paginationState.start - scope.stItemsByPage;
         if (start < 0) {
           start = 0;
         }
         ctrl.slice(start, scope.stItemsByPage);
-      };
-
-      scope.onSwipeRight = function() {
-        ctrl.slice(paginationState.start + scope.stItemsByPage, scope.stItemsByPage);
       };
     }
   };
