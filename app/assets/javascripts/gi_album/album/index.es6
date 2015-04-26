@@ -10,7 +10,9 @@ class IndexController {
     vm.Breadcrumb = Breadcrumb;
     vm.dir = null;
     vm.elements = [];
+    vm.firstPhotoIndex = 0;
     vm.photo = null;
+    vm.photoIndex = null;
     vm.rows = 20;
     vm.thumb = null;
 
@@ -27,6 +29,7 @@ class IndexController {
       .then((resp) => {
         this.photo = null;
         this.elements = resp.data;
+        this.firstPhotoIndex = _.findIndex(this.elements, {photo: true});
         console.debug("count: " + this.elements.length);
 
         // TODO KI ugly hack to keep focus in desired place for keyboard actions
@@ -50,11 +53,29 @@ class IndexController {
   setPhoto(photo, event) {
     if (this.photo == photo) {
       this.photo = null;
+      this.photoIndex = null;
     } else {
       this.photo = photo;
+      this.photoIndex = _.indexOf(this.elements, photo);
     }
     if (event) {
       event.stopPropagation();
+    }
+  }
+
+  nextPhoto(dir) {
+    if (this.photo) {
+      let index = this.photoIndex + dir;
+      if (index < this.firstPhotoIndex) {
+        index = this.firstPhotoIndex;
+      }
+      if (index >= this.elements.length) {
+        index = this.elements.length - 1;
+      }
+      let photo = this.elements[index];
+      if (photo !== this.photo) {
+        this.setPhoto(photo, null);
+      }
     }
   }
 
@@ -109,13 +130,21 @@ class IndexController {
     console.log("key = " + event.keyCode);
     if (event.keyCode === 27) {
       // escape
-      this.setPhoto(null);
+      this.setPhoto(null, event);
     } else if (event.keyCode === 39) {
       // right
-      this.onSwipeLeft();
+      if (this.photo) {
+        this.nextPhoto(1);
+      } else {
+        this.onSwipeLeft();
+      }
     } else if (event.keyCode === 37) {
       // left
-      this.onSwipeRight();
+      if (this.photo) {
+        this.nextPhoto(-1);
+      } else {
+        this.onSwipeRight();
+      }
     }
   }
 

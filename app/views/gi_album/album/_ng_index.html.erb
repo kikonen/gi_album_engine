@@ -81,5 +81,13 @@
     ng-if="index.photo"
     ng-click="index.setPhoto(null, $event)">
   <img ng-src="thumb/400/{{index.photo.path}}"/>
-  <a ng-href="http://kari.dy.fi/album/{{index.photo.path}}" target="_blank">Open Original</a>
+  <a ng-href="http://kari.dy.fi/album/{{index.photo.path}}" target="_blank">
+    <span class="label label-primary">
+      {{1 + index.photoIndex - index.firstPhotoIndex}}
+      /
+      {{index.elements.length - index.firstPhotoIndex}}
+    </span>
+    &nbsp;
+    Open Original
+  </a>
 </div>
