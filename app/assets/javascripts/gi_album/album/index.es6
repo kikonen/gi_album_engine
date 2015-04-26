@@ -28,6 +28,9 @@ class IndexController {
         this.photo = null;
         this.elements = resp.data;
         console.debug("count: " + this.elements.length);
+
+        // TODO KI ugly hack to keep focus in desired place for keyboard actions
+        document.getElementById("tableContainer").focus();
       });
   }
 
@@ -105,7 +108,14 @@ class IndexController {
   onKeydown(event) {
     console.log("key = " + event.keyCode);
     if (event.keyCode === 27) {
+      // escape
       this.setPhoto(null);
+    } else if (event.keyCode === 39) {
+      // right
+      this.onSwipeLeft();
+    } else if (event.keyCode === 37) {
+      // left
+      this.onSwipeRight();
     }
   }
 
