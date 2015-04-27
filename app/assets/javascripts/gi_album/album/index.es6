@@ -8,8 +8,16 @@ class IndexController {
     vm.$location = $location;
     vm.$http = $http;
     vm.Breadcrumb = Breadcrumb;
+    vm.thumb = null;
+
+    vm.rows = 20;
+
     vm.dir = null;
     vm.elements = [];
+    vm.firstPhotoIndex = 0;
+
+    vm.photo = null;
+    vm.photoIndex = null;
 
     $scope.$watch(() => $location.url(), () => vm.updateDir());
     $scope.$watch(() => vm.dir , () => vm.updateLocation());
@@ -22,8 +30,13 @@ class IndexController {
     this.$http
       .get('api/photo/index', { params: { dir: this.dir } })
       .then((resp) => {
+        this.photo = null;
         this.elements = resp.data;
+        this.firstPhotoIndex = _.findIndex(this.elements, {photo: true});
         console.debug("count: " + this.elements.length);
+
+        // TODO KI ugly hack to keep focus in desired place for keyboard actions
+        document.getElementById("tableContainer").focus();
       });
   }
 
@@ -39,6 +52,37 @@ class IndexController {
   goDir(path) {
     this.$location.url(BASE_URL + path);
   }
+
+  setPhoto(photo, event) {
+    if (this.photo == photo) {
+      this.photo = null;
+      this.photoIndex = null;
+    } else {
+      this.photo = photo;
+      this.photoIndex = _.indexOf(this.elements, photo);
+    }
+    if (event) {
+      event.stopPropagation();
+    }
+  }
+
+  nextPhoto(dir) {
+    if (this.photo) {
+      let index = this.photoIndex + dir;
+      if (index < this.firstPhotoIndex) {
+        index = this.firstPhotoIndex;
+      }
+      if (index >= this.elements.length) {
+        index = this.elements.length - 1;
+      }
+      let photo = this.elements[index];
+      if (photo !== this.photo) {
+        this.setPhoto(photo, null);
+        this.thumb.showPageByIndex(index);
+      }
+    }
+  }
+
 
   updateLocation() {
     this.goDir(this.dir);
@@ -67,7 +111,7 @@ class IndexController {
         path = _.map(elements, (elem) => {
           if (elem === '') {
             return {
-              name: 'Home',
+              name: 'Album',
               url: '/gi_album'
             };
           } else {
@@ -79,7 +123,42 @@ class IndexController {
             };
           }
         });
+    path.unshift({
+      name: 'Home',
+      url: '/'
+    });
     this.Breadcrumb.setPath(path);
+  }
+
+  onKeydown(event) {
+    if (event.keyCode === 27) {
+      // escape
+      this.setPhoto(null, event);
+    } else if (event.keyCode === 39) {
+      // right
+      if (this.photo) {
+        this.nextPhoto(1);
+      } else {
+        this.onSwipeLeft();
+      }
+    } else if (event.keyCode === 37) {
+      // left
+      if (this.photo) {
+        this.nextPhoto(-1);
+      } else {
+        this.onSwipeRight();
+      }
+    } else {
+      console.log("key = " + event.keyCode);
+    }
+  }
+
+  onSwipeLeft() {
+    this.thumb.onSwipeLeft();
+  }
+
+  onSwipeRight() {
+    this.thumb.onSwipeRight();
   }
 }
 
@@ -95,4 +174,38 @@ angular.module('album')
         controller: IndexController,
         controllerAs: 'index'
       });
+})
+.directive('giThumb', function () {
+  return {
+    restrict: 'A',
+    require: '^stTable',
+    scope: {
+      stItemsByPage: '=?'
+    },
+    link: function (scope, element, attrs, ctrl) {
+      scope.$parent.index.thumb = scope;
+
+      var paginationState = ctrl.tableState().pagination;
+
+      scope.showPageByIndex = (index) => {
+        let page = (index / scope.stItemsByPage) << 0,
+            start = page * scope.stItemsByPage;
+        if (page !== paginationState.start) {
+          ctrl.slice(start, scope.stItemsByPage);
+        }
+      };
+
+      scope.onSwipeLeft = () => {
+        ctrl.slice(paginationState.start + scope.stItemsByPage, scope.stItemsByPage);
+      };
+
+      scope.onSwipeRight = () => {
+        var start = paginationState.start - scope.stItemsByPage;
+        if (start < 0) {
+          start = 0;
+        }
+        ctrl.slice(start, scope.stItemsByPage);
+      };
+    }
+  };
 });
