@@ -79,7 +79,11 @@
 <div
     class="gi-photo-preview"
     ng-if="index.photo"
-    ng-click="index.setPhoto(null, $event)">
+    ng-click="index.setPhoto(null, $event)"
+    ng-swipe-left="index.nextPhoto(1)"
+    ng-swipe-right="index.nextPhoto(-1)"
+    ondragstart="return false;"
+    >
   <img ng-src="thumb/400/{{index.photo.path}}"/>
   <a ng-href="http://kari.dy.fi/album/{{index.photo.path}}" target="_blank">
     <span class="label label-primary">
