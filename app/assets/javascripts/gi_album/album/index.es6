@@ -8,13 +8,16 @@ class IndexController {
     vm.$location = $location;
     vm.$http = $http;
     vm.Breadcrumb = Breadcrumb;
+    vm.thumb = null;
+
+    vm.rows = 20;
+
     vm.dir = null;
     vm.elements = [];
     vm.firstPhotoIndex = 0;
+
     vm.photo = null;
     vm.photoIndex = null;
-    vm.rows = 20;
-    vm.thumb = null;
 
     $scope.$watch(() => $location.url(), () => vm.updateDir());
     $scope.$watch(() => vm.dir , () => vm.updateLocation());
@@ -75,6 +78,7 @@ class IndexController {
       let photo = this.elements[index];
       if (photo !== this.photo) {
         this.setPhoto(photo, null);
+        this.thumb.showPageByIndex(index);
       }
     }
   }
@@ -127,7 +131,6 @@ class IndexController {
   }
 
   onKeydown(event) {
-    console.log("key = " + event.keyCode);
     if (event.keyCode === 27) {
       // escape
       this.setPhoto(null, event);
@@ -145,6 +148,8 @@ class IndexController {
       } else {
         this.onSwipeRight();
       }
+    } else {
+      console.log("key = " + event.keyCode);
     }
   }
 
@@ -182,11 +187,19 @@ angular.module('album')
 
       var paginationState = ctrl.tableState().pagination;
 
-      scope.onSwipeLeft = function() {
+      scope.showPageByIndex = (index) => {
+        let page = (index / scope.stItemsByPage) << 0,
+            start = page * scope.stItemsByPage;
+        if (page !== paginationState.start) {
+          ctrl.slice(start, scope.stItemsByPage);
+        }
+      };
+
+      scope.onSwipeLeft = () => {
         ctrl.slice(paginationState.start + scope.stItemsByPage, scope.stItemsByPage);
       };
 
-      scope.onSwipeRight = function() {
+      scope.onSwipeRight = () => {
         var start = paginationState.start - scope.stItemsByPage;
         if (start < 0) {
           start = 0;
