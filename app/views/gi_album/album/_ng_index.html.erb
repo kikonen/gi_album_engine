@@ -84,7 +84,12 @@
     ng-swipe-right="index.nextPhoto(-1)"
     ondragstart="return false;"
     >
+<!--
   <img ng-src="thumb/400/{{index.photo.path}}"/>
+-->
+  <div class="gi-photo-preview-img"
+       preview-img="thumb/400/{{index.photo.path}}">
+  </div>
   <a ng-href="http://kari.dy.fi/album/{{index.photo.path}}" target="_blank">
     <span class="label label-primary">
       {{1 + index.photoIndex - index.firstPhotoIndex}}
