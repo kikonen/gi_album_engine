@@ -18,7 +18,7 @@
           </div>
 	  <div st-pagination=""
                st-items-by-page="index.rows"
-               st-displayed-pages="10"
+               st-displayed-pages="5"
                st-template="gi_album/album/pagination"
                >
           </div>
@@ -84,9 +84,6 @@
     ng-swipe-right="index.nextPhoto(-1)"
     ondragstart="return false;"
     >
-<!--
-  <img ng-src="thumb/400/{{index.photo.path}}"/>
--->
   <div class="gi-photo-preview-img"
        preview-img="thumb/400/{{index.photo.path}}">
   </div>
