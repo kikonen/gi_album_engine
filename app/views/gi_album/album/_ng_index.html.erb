@@ -35,6 +35,7 @@
         </div>
 
         <div class="gi-thumb gi-thumb-film"
+             ng-style="{transform: 'rotate(' + index.getRandomRotate(elem) + 'deg)'}"
              ng-class="{'gi-thumb-photo':elem.photo || elem.video, 'gi-thumb-dir':elem.dir}"
              ng-repeat="elem in displayedElements track by elem.name">
 
@@ -49,7 +50,7 @@
           </div>
 
           <div ng-if="elem.photo"
-              ng-click="index.setPhoto(elem, $event)">
+               ng-click="index.setPhoto(elem, $event)">
             <img class="gi-thumb-image" ng-src="thumb/<%= GiAlbum::Photo::DEF_THUMB_SIZE %>/{{elem.path}}"/>
 <!--
             <div class="gi-thumb-info">

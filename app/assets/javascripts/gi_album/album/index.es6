@@ -103,6 +103,13 @@ class IndexController {
     }
   }
 
+  getRandomRotate(photo) {
+    if (!photo.rotate) {
+      photo.rotate =  2 - Math.random() * 4;
+    }
+    return photo.rotate;
+  }
+
   // Show current album path as breadcrumbs
   updateCrumbs() {
     console.debug(this.dir);
