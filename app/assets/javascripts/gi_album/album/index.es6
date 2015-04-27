@@ -208,4 +208,18 @@ angular.module('album')
       };
     }
   };
+})
+.directive('previewImg', function() {
+  return {
+    scope: {
+      previewImg: '@'
+    },
+    link: (scope, element) => {
+      scope.$watch('previewImg', () => {
+        element.css({
+          'background-image': 'url(' + scope.previewImg +')'
+        });
+      });
+    }
+  };
 });

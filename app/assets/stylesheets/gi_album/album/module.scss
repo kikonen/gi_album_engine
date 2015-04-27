@@ -168,10 +168,18 @@ body {
 
   padding-left: 15px;
   padding-top: 15px;
-  overflow: auto;
+  padding-bottom: 20px;
+  padding-right: 15px;
 }
 
 .gi-photo-preview img {
   display: block;
   height: 100%;
+}
+
+.gi-photo-preview-img  {
+  height: 100%;
+  width: 100%;
+  background-size: contain;
+  background-repeat: no-repeat;
 }
