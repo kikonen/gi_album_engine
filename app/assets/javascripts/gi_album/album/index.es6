@@ -223,8 +223,9 @@ angular.module('album')
     },
     link: (scope, element) => {
       scope.$watch('previewImg', () => {
+        let url = scope.previewImg.replace(/ /g, '%20');
         element.css({
-          'background-image': 'url(' + scope.previewImg +')'
+          'background-image': 'url(' + url + ')'
         });
       });
     }
