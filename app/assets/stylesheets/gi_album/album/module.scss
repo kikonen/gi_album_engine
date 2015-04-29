@@ -141,9 +141,11 @@ body {
 }
 
 .gi-thumb:hover {
+  transform: rotate(0deg) !important;
   animation-name: thumb_wave;
-  animation-duration: 2s;
-  animation-iteration-count: infinite;
+  animation-delay: 0.3s;
+  animation-duration: 1.5s;
+  animation-iteration-count: 2;
   animation-timing-function: linear;
 }
 
