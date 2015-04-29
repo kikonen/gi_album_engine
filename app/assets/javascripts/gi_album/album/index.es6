@@ -35,7 +35,7 @@ class IndexController {
         this.firstPhotoIndex = _.findIndex(this.elements, {photo: true});
         console.debug("count: " + this.elements.length);
 
-        // TODO KI ugly hack to keep focus in desired place for keyboard actions
+        // HACK KI ugly hack to keep focus in desired place for keyboard actions
         document.getElementById("tableContainer").focus();
       });
   }
@@ -135,6 +135,9 @@ class IndexController {
       url: '/'
     });
     this.Breadcrumb.setPath(path);
+
+    // HACK KI to update document title
+    document.title = path[path.length -1].name;
   }
 
   onKeydown(event) {
