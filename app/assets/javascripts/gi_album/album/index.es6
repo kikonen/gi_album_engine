@@ -3,10 +3,11 @@
 const BASE_URL = '';
 
 class IndexController {
-  constructor($scope, $http, $location, Breadcrumb) {
+  constructor($scope, $http, $location, $sce, Breadcrumb) {
     var vm = this;
     vm.$location = $location;
     vm.$http = $http;
+    vm.$sce = $sce;
     vm.Breadcrumb = Breadcrumb;
     vm.thumb = null;
 
@@ -34,9 +35,6 @@ class IndexController {
         this.elements = resp.data;
         this.firstPhotoIndex = _.findIndex(this.elements, {photo: true});
         console.debug("count: " + this.elements.length);
-
-        // TODO KI ugly hack to keep focus in desired place for keyboard actions
-        document.getElementById("tableContainer").focus();
       });
   }
 
@@ -103,6 +101,19 @@ class IndexController {
     }
   }
 
+  getRandomRotate(photo) {
+    if (!photo.rotate) {
+      photo.rotate =  2 - Math.random() * 4;
+    }
+    return photo.rotate;
+  }
+
+  getVideoURL(photo) {
+    var url = 'http://kari.dy.fi/album/' + photo.path.replace(/ /g, '%20');
+    console.log(url);
+    return this.$sce.trustAsResourceUrl(url);
+  }
+
   // Show current album path as breadcrumbs
   updateCrumbs() {
     console.debug(this.dir);
@@ -128,6 +139,9 @@ class IndexController {
       url: '/'
     });
     this.Breadcrumb.setPath(path);
+
+    // HACK KI to update document title
+    document.title = path[path.length -1].name;
   }
 
   onKeydown(event) {
@@ -175,6 +189,8 @@ angular.module('album')
         controllerAs: 'index'
       });
 })
+// HACK KI access into stTable to allow accessing its' controller to
+// manage swipe actions
 .directive('giThumb', function () {
   return {
     restrict: 'A',
@@ -209,6 +225,8 @@ angular.module('album')
     }
   };
 })
+// Display preview img as background-image to allow easily proper
+// scaling to fit into screen with retaining aspect-ratio
 .directive('previewImg', function() {
   return {
     scope: {
@@ -216,9 +234,24 @@ angular.module('album')
     },
     link: (scope, element) => {
       scope.$watch('previewImg', () => {
+        let url = scope.previewImg.replace(/ /g, '%20');
         element.css({
-          'background-image': 'url(' + scope.previewImg +')'
+          'background-image': 'url(' + url + ')'
         });
+      });
+    }
+  };
+})
+// Global keyboard handler, which works without requiring focus
+.directive('giAlbumKey', function() {
+  return {
+    restrict: 'E',
+    scope: {
+      keydown: '&keydown'
+    },
+    link: (scope) => {
+      jQuery(document).on("keydown", (event) => {
+        scope.$apply(scope.keydown({event: event}));
       });
     }
   };
