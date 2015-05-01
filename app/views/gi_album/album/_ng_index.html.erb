@@ -59,10 +59,9 @@
                 <img ng-src="thumb/<%= GiAlbum::Photo::DEF_THUMB_SIZE %>/{{elem.path}}"/>
               </div>
 
-              <div ng-if="elem.video">
-                <a ng-href="http://kari.dy.fi/album/{{elem.path}}" target="_blank">
-                  <%= image_tag 'gi_album/material/movie.svg', class: 'gi-thumb-image' %>
-                </a>
+              <div ng-if="elem.video"
+                   ng-click="index.setPhoto(elem, $event)">
+                <%= image_tag 'gi_album/material/movie.svg' %>
               </div>
             </div>
           </div>
@@ -81,8 +80,17 @@
     ondragstart="return false;"
     >
   <div class="gi-photo-preview-img"
+       ng-if="index.photo.photo"
        preview-img="thumb/400/{{index.photo.path}}">
   </div>
+
+  <div class="gi-photo-preview-video"
+       ng-if="index.photo.video">
+    <a ng-href="http://kari.dy.fi/album/{{index.photo.path}}" target="_blank">
+      <%= image_tag 'gi_album/material/movie.svg' %>
+    </a>
+  </div>
+
   <a ng-href="http://kari.dy.fi/album/{{index.photo.path}}" target="_blank">
     <span class="label label-primary">
       {{1 + index.photoIndex - index.firstPhotoIndex}}

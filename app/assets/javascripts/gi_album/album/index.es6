@@ -3,10 +3,11 @@
 const BASE_URL = '';
 
 class IndexController {
-  constructor($scope, $http, $location, Breadcrumb) {
+  constructor($scope, $http, $location, $sce, Breadcrumb) {
     var vm = this;
     vm.$location = $location;
     vm.$http = $http;
+    vm.$sce = $sce;
     vm.Breadcrumb = Breadcrumb;
     vm.thumb = null;
 
@@ -105,6 +106,12 @@ class IndexController {
       photo.rotate =  2 - Math.random() * 4;
     }
     return photo.rotate;
+  }
+
+  getVideoURL(photo) {
+    var url = 'http://kari.dy.fi/album/' + photo.path.replace(/ /g, '%20');
+    console.log(url);
+    return this.$sce.trustAsResourceUrl(url);
   }
 
   // Show current album path as breadcrumbs
