@@ -34,9 +34,6 @@ class IndexController {
         this.elements = resp.data;
         this.firstPhotoIndex = _.findIndex(this.elements, {photo: true});
         console.debug("count: " + this.elements.length);
-
-        // HACK KI ugly hack to keep focus in desired place for keyboard actions
-        document.getElementById("tableContainer").focus();
       });
   }
 
@@ -185,6 +182,8 @@ angular.module('album')
         controllerAs: 'index'
       });
 })
+// HACK KI access into stTable to allow accessing its' controller to
+// manage swipe actions
 .directive('giThumb', function () {
   return {
     restrict: 'A',
@@ -219,6 +218,8 @@ angular.module('album')
     }
   };
 })
+// Display preview img as background-image to allow easily proper
+// scaling to fit into screen with retaining aspect-ratio
 .directive('previewImg', function() {
   return {
     scope: {
@@ -230,6 +231,20 @@ angular.module('album')
         element.css({
           'background-image': 'url(' + url + ')'
         });
+      });
+    }
+  };
+})
+// Global keyboard handler, which works without requiring focus
+.directive('giAlbumKey', function() {
+  return {
+    restrict: 'E',
+    scope: {
+      keydown: '&keydown'
+    },
+    link: (scope) => {
+      jQuery(document).on("keydown", (event) => {
+        scope.$apply(scope.keydown({event: event}));
       });
     }
   };

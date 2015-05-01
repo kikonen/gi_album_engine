@@ -1,9 +1,9 @@
-<div class="gi-full-height gi-album-table-container"
+<div class="gi-full-height"
+     id="gi-album-table-container"
      ng-click="index.setPhoto(null)"
-     ng-keydown="index.onKeydown($event)"
      ng-swipe-left="index.onSwipeLeft()"
-     ng-swipe-right="index.onSwipeRight()"
-     tabindex="0">
+     ng-swipe-right="index.onSwipeRight()">
+  <gi-album-key keydown="index.onKeydown(event)"></gi-album-key>
   <table
       ng-click="index.setPhoto(null)"
       st-table="displayedElements"
