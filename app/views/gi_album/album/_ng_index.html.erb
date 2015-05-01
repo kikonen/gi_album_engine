@@ -1,5 +1,4 @@
-<div class="gi-full-height"
-     id="tableContainer"
+<div class="gi-full-height gi-album-table-container"
      ng-click="index.setPhoto(null)"
      ng-keydown="index.onKeydown($event)"
      ng-swipe-left="index.onSwipeLeft()"
@@ -28,48 +27,44 @@
 
     <tr>
       <td colspan="2">
-        <div class="gi-thumb gi-thumb-film gi-thumb-dir"
-             ng-if="index.dir.length > 1"
-             ng-click="index.goUp(index.dir)">
-          <%= image_tag 'gi_album/material/keyboard-backspace.svg', class: 'gi-thumb-image' %>
+        <div class="gi-thumb-container"
+             ng-if="index.dir.length > 1">
+          <div class="gi-thumb"
+               ng-click="index.goUp(index.dir)">
+            <div class="gi-thumb-content-container">
+              <%= image_tag 'gi_album/material/keyboard-backspace.svg', class: 'gi-thumb-image' %>
+            </div>
+          </div>
         </div>
 
-        <div class="gi-thumb gi-thumb-film"
-             ng-style="{transform: 'rotate(' + index.getRandomRotate(elem) + 'deg)'}"
-             ng-class="{'gi-thumb-photo':elem.photo || elem.video, 'gi-thumb-dir':elem.dir}"
+        <div class="gi-thumb-container"
              ng-repeat="elem in displayedElements track by elem.name">
 
-          <div class="gi-thumb-content"
-               ng-if="elem.dir"
-               ng-click="index.goDir(elem.path)">
-            <%= image_tag 'gi_album/material/folder-photo.svg', class: 'gi-thumb-image' %>
+          <div class="gi-thumb"
+               ng-style="{transform: 'rotate(' + index.getRandomRotate(elem) + 'deg)'}"
+               ng-class="{'gi-thumb-photo':elem.photo || elem.video, 'gi-thumb-dir':elem.dir}">
 
-            <div class="gi-thumb-info">
-              <div class="gi-thumb-text">{{ elem.display_name }}</div>
-            </div>
-          </div>
+            <div class="gi-thumb-content-container">
+              <div ng-if="elem.dir"
+                   ng-click="index.goDir(elem.path)">
+                <%= image_tag 'gi_album/material/folder-photo.svg' %>
 
-          <div ng-if="elem.photo"
-               ng-click="index.setPhoto(elem, $event)">
-            <img class="gi-thumb-image" ng-src="thumb/<%= GiAlbum::Photo::DEF_THUMB_SIZE %>/{{elem.path}}"/>
-<!--
-            <div class="gi-thumb-info">
-              <div>{{ elem.display_name }}</div>
-              <div>{{ elem.image_info.format }}</div>
-              <div>{{ elem.image_info.size }}</div>
-            </div>
--->
-          </div>
+                <div class="gi-thumb-info-container">
+                  <div class="gi-thumb-info">{{ elem.display_name }}</div>
+                </div>
+              </div>
 
-          <div ng-if="elem.video">
-            <a ng-href="http://kari.dy.fi/album/{{elem.path}}" target="_blank">
-              <%= image_tag 'gi_album/material/movie.svg', class: 'gi-thumb-image' %>
-            </a>
-<!--
-            <div class="gi-thumb-info">
-              <div>{{ elem.display_name }}</div>
+              <div ng-if="elem.photo"
+                   ng-click="index.setPhoto(elem, $event)">
+                <img ng-src="thumb/<%= GiAlbum::Photo::DEF_THUMB_SIZE %>/{{elem.path}}"/>
+              </div>
+
+              <div ng-if="elem.video">
+                <a ng-href="http://kari.dy.fi/album/{{elem.path}}" target="_blank">
+                  <%= image_tag 'gi_album/material/movie.svg', class: 'gi-thumb-image' %>
+                </a>
+              </div>
             </div>
--->
           </div>
         </div>
       </td>
