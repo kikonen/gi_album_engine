@@ -215,3 +215,22 @@ body {
 .gi-photo-preview-video img {
   height: 100px;
 }
+
+.gi-photo-step {
+  position: absolute;
+  top: 0;
+  width: 200px;
+  height: 100%;
+}
+
+.gi-photo-step:hover {
+  background-color: rgba(200, 200, 200, 0.5);
+}
+
+.gi-photo-prev {
+  left: 0;
+}
+
+.gi-photo-next {
+  right: 0;
+}

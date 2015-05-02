@@ -64,7 +64,7 @@ class IndexController {
     }
   }
 
-  nextPhoto(dir) {
+  nextPhoto(dir, event) {
     if (this.photo) {
       let index = this.photoIndex + dir;
       if (index < this.firstPhotoIndex) {
@@ -77,6 +77,10 @@ class IndexController {
       if (photo !== this.photo) {
         this.setPhoto(photo, null);
         this.thumb.showPageByIndex(index);
+      }
+
+      if (event) {
+        event.stopPropagation();
       }
     }
   }
