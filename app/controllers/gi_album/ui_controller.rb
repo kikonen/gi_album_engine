@@ -4,6 +4,7 @@ module GiAlbum
 
     def show
       @show_navbar = false
+      @show_breadcrumb = false
       @base_href = GiAlbum::Engine.base_href
     end
   end
