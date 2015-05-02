@@ -84,9 +84,15 @@
        preview-img="thumb/400/{{index.photo.path}}">
     <div class="gi-photo-step gi-photo-prev"
          ng-click="index.nextPhoto(-1, $event)">
+      <div>
+        <span class="glyphicon glyphicon-chevron-left"></span>
+      </div>
     </div>
     <div class="gi-photo-step gi-photo-next"
          ng-click="index.nextPhoto(1, $event)">
+      <div>
+        <span class="glyphicon glyphicon-chevron-right"></span>
+      </div>
     </div>
   </div>
 
