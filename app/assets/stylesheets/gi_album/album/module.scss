@@ -249,6 +249,11 @@ html.no-touch .gi-photo-step:hover {
   background-color: rgba(200, 200, 200, 0.5);
 }
 
+html.touch .gi-photo-step:active {
+  color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(200, 200, 200, 0.5);
+}
+
 .gi-photo-prev {
   left: 0;
 }
