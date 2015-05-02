@@ -90,7 +90,7 @@ class IndexController {
 
           this.slideLeft = false;
           this.slideRight = false;
-        }, 300);
+        }, 500);
       }
 
       if (event) {

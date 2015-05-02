@@ -298,16 +298,16 @@ html.touch .gi-photo-step:active {
 
 .gi-slide-left {
   animation-name: preview-slide-left;
-  animation-duration: 0.3s;
+  animation-duration: 0.5s;
   animation-iteration-count: 1;
-  animation-timing-function: ease-in;
+  animation-timing-function: cubic-bezier(0.22, 0.51, 0.03, 0.9);
   animation-fill-mode: forwards;
 }
 
 .gi-slide-right {
   animation-name: preview-slide-right;
-  animation-duration: 0.3s;
+  animation-duration: 0.5s;
   animation-iteration-count: 1;
-  animation-timing-function: ease-in;
+  animation-timing-function: cubic-bezier(0.22, 0.51, 0.03, 0.9);
   animation-fill-mode: forwards;
 }
