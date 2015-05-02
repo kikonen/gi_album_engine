@@ -241,7 +241,8 @@ body {
 }
 
 .gi-photo-step span {
-  font-size: 8em;
+  /* TODO KI media query */
+  font-size: 3em;
 }
 
 html.no-touch .gi-photo-step:hover {
