@@ -79,39 +79,32 @@
     ng-swipe-right="index.nextPhoto(-1)"
     ondragstart="return false;"
     >
-  <div class="gi-photo-preview-img"
-       ng-if="index.photo.photo"
-       preview-img="thumb/400/{{index.photo.path}}">
-
-    <div class="gi-photo-step gi-photo-prev"
-         ng-click="index.nextPhoto(-1, $event)">
-      <div>
-        <span class="glyphicon glyphicon-chevron-left"></span>
+  <div class="gi-photo-preview-img-container">
+    <div class="gi-photo-preview-img-slider"
+         ng-class="{'gi-slide-left':index.slideLeft, 'gi-slide-right':index.slideRight}"
+         >
+      <div class="gi-photo-preview-img"
+           ng-if="index.photo.photo"
+           preview-img="thumb/400/{{index.photo.path}}">
       </div>
-    </div>
-    <div class="gi-photo-step gi-photo-next"
-         ng-click="index.nextPhoto(1, $event)">
-      <div>
-        <span class="glyphicon glyphicon-chevron-right"></span>
+
+      <div class="gi-photo-preview-video"
+           ng-if="index.photo.video">
+        <%= image_tag 'gi_album/material/movie.svg' %>
       </div>
     </div>
   </div>
 
-  <div class="gi-photo-preview-video"
-       ng-if="index.photo.video">
-    <%= image_tag 'gi_album/material/movie.svg' %>
-
-    <div class="gi-photo-step gi-photo-prev"
-         ng-click="index.nextPhoto(-1, $event)">
-      <div>
-        <span class="glyphicon glyphicon-chevron-left"></span>
-      </div>
+  <div class="gi-photo-step gi-photo-prev"
+       ng-click="index.nextPhoto(-1, $event)">
+    <div>
+      <span class="glyphicon glyphicon-chevron-left"></span>
     </div>
-    <div class="gi-photo-step gi-photo-next"
-         ng-click="index.nextPhoto(1, $event)">
-      <div>
-        <span class="glyphicon glyphicon-chevron-right"></span>
-      </div>
+  </div>
+  <div class="gi-photo-step gi-photo-next"
+       ng-click="index.nextPhoto(1, $event)">
+    <div>
+      <span class="glyphicon glyphicon-chevron-right"></span>
     </div>
   </div>
 

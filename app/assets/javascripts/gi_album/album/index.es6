@@ -3,9 +3,10 @@
 const BASE_URL = '';
 
 class IndexController {
-  constructor($scope, $http, $location, $sce, Breadcrumb) {
+  constructor($scope, $http, $location, $timeout, $sce, Breadcrumb) {
     var vm = this;
     vm.$location = $location;
+    vm.$timeout = $timeout;
     vm.$http = $http;
     vm.$sce = $sce;
     vm.Breadcrumb = Breadcrumb;
@@ -75,8 +76,21 @@ class IndexController {
       }
       let photo = this.elements[index];
       if (photo !== this.photo) {
-        this.setPhoto(photo, null);
-        this.thumb.showPageByIndex(index);
+        this.slideLeft = false;
+        this.slideRight = false;
+        if (dir < 0) {
+          this.slideRight = true;
+        } else {
+          this.slideLeft = true;
+        }
+
+        this.$timeout(() => {
+          this.setPhoto(photo, null);
+          this.thumb.showPageByIndex(index);
+
+          this.slideLeft = false;
+          this.slideRight = false;
+        }, 300);
       }
 
       if (event) {
