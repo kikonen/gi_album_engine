@@ -1,4 +1,3 @@
-require 'rails_config'
 require "gi_album/engine"
 
 module GiAlbum
@@ -12,6 +11,6 @@ end
 
 module GiAlbum
   def self.config
-    @config ||= RailsConfig.load_files(RailsConfig.setting_files("#{self.gem_root_dir}/config", Rails.env))
+    @config ||= Config.load_files(Config.setting_files("#{self.gem_root_dir}/config", Rails.env))
   end
 end
