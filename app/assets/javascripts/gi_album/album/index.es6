@@ -127,7 +127,7 @@ class IndexController {
   }
 
   getVideoURL(photo) {
-    var url = 'http://kari.dy.fi/album/' + photo.path.replace(/ /g, '%20');
+    var url = 'http://www.ikari.fi/album/' + photo.path.replace(/ /g, '%20');
     console.log(url);
     return this.$sce.trustAsResourceUrl(url);
   }
