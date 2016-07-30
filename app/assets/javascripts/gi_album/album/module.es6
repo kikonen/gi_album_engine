@@ -1,5 +1,3 @@
-//= require angular-touch-1.3.15/angular-touch
-//= require angular-smart-table-2.0.1/smart-table
 //
 //= require_self
 //= require_tree ./
@@ -17,6 +15,8 @@ export function init() {
     'ngTouch',
   ])
     .config(($stateProvider) => {
+      "ngInject";
+
       $stateProvider
         .state(
           'root',

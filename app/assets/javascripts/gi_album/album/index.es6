@@ -4,6 +4,8 @@ const BASE_URL = '';
 
 class IndexController {
   constructor($scope, $http, $location, $timeout, $sce, Breadcrumb) {
+    "ngInject";
+
     var vm = this;
     vm.$location = $location;
     vm.$timeout = $timeout;
