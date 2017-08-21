@@ -1,25 +1,31 @@
-//= require angular-touch-1.3.15/angular-touch
-//= require angular-smart-table-2.0.1/smart-table
 //
 //= require_self
 //= require_tree ./
 "use strict";
 
-import shared from 'ng/module';
+import * as base from 'ng/module';
+import * as index from './index';
 
-angular.module("album", [
-  shared.name,
-  'smart-table',
-  'ngTouch',
-])
-.config(($stateProvider) => {
-  $stateProvider
-    .state(
-      'root',
-      {
-        abstract: true,
-        templateUrl: 'gi_album/album/root'
-      });
-});
+export function init() {
+  base.init();
 
-import {} from './index';
+  angular.module("album", [
+    'base',
+    'smart-table',
+    'ngTouch',
+  ])
+    .config(($stateProvider) => {
+      "ngInject";
+
+      $stateProvider
+        .state(
+          'root',
+          {
+            abstract: true,
+            templateUrl: 'gi_album/album/root'
+          });
+    });
+
+  index.init();
+  gi.initNg('album');
+}

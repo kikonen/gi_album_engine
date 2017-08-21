@@ -32,6 +32,12 @@ module GiAlbum
     def list
       return [] unless valid?
 
+      logger.debug "FULL_PATH: #{full_path}"
+
+      unless File.exists?(full_path)
+        raise "Path missing: #{full_path}"
+      end
+
       glob = "#{full_path}/*"
       elements = Dir[glob]
         .map do |f|

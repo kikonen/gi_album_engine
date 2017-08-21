@@ -4,6 +4,8 @@ const BASE_URL = '';
 
 class IndexController {
   constructor($scope, $http, $location, $timeout, $sce, Breadcrumb) {
+    "ngInject";
+
     var vm = this;
     vm.$location = $location;
     vm.$timeout = $timeout;
@@ -127,7 +129,7 @@ class IndexController {
   }
 
   getVideoURL(photo) {
-    var url = 'http://kari.dy.fi/album/' + photo.path.replace(/ /g, '%20');
+    var url = 'http://www.ikari.fi/album/' + photo.path.replace(/ /g, '%20');
     console.log(url);
     return this.$sce.trustAsResourceUrl(url);
   }
@@ -194,83 +196,85 @@ class IndexController {
   }
 }
 
-angular.module('album')
-.controller('IndexController', IndexController)
-.config(($stateProvider) => {
-  $stateProvider
-    .state(
-      'root.index',
-      {
-        url: '/{path:.*}',
-        templateUrl: 'gi_album/album/index',
-        controller: IndexController,
-        controllerAs: 'index'
-      });
-})
-// HACK KI access into stTable to allow accessing its' controller to
-// manage swipe actions
-.directive('giThumb', function () {
-  return {
-    restrict: 'A',
-    require: '^stTable',
-    scope: {
-      stItemsByPage: '=?'
-    },
-    link: function (scope, element, attrs, ctrl) {
-      scope.$parent.index.thumb = scope;
+export function init() {
+  angular.module('album')
+    .controller('IndexController', IndexController)
+    .config(($stateProvider) => {
+      $stateProvider
+        .state(
+          'root.index',
+          {
+            url: '/{path:.*}',
+            templateUrl: 'gi_album/album/index',
+            controller: IndexController,
+            controllerAs: 'index'
+          });
+    })
+  // HACK KI access into stTable to allow accessing its' controller to
+  // manage swipe actions
+    .directive('giThumb', function () {
+      return {
+        restrict: 'A',
+        require: '^stTable',
+        scope: {
+          stItemsByPage: '=?'
+        },
+        link: function (scope, element, attrs, ctrl) {
+          scope.$parent.index.thumb = scope;
 
-      var paginationState = ctrl.tableState().pagination;
+          var paginationState = ctrl.tableState().pagination;
 
-      scope.showPageByIndex = (index) => {
-        let page = (index / scope.stItemsByPage) << 0,
-            start = page * scope.stItemsByPage;
-        if (page !== paginationState.start) {
-          ctrl.slice(start, scope.stItemsByPage);
+          scope.showPageByIndex = (index) => {
+            let page = (index / scope.stItemsByPage) << 0,
+                start = page * scope.stItemsByPage;
+            if (page !== paginationState.start) {
+              ctrl.slice(start, scope.stItemsByPage);
+            }
+          };
+
+          scope.onSwipeLeft = () => {
+            ctrl.slice(paginationState.start + scope.stItemsByPage, scope.stItemsByPage);
+          };
+
+          scope.onSwipeRight = () => {
+            var start = paginationState.start - scope.stItemsByPage;
+            if (start < 0) {
+              start = 0;
+            }
+            ctrl.slice(start, scope.stItemsByPage);
+          };
         }
       };
-
-      scope.onSwipeLeft = () => {
-        ctrl.slice(paginationState.start + scope.stItemsByPage, scope.stItemsByPage);
-      };
-
-      scope.onSwipeRight = () => {
-        var start = paginationState.start - scope.stItemsByPage;
-        if (start < 0) {
-          start = 0;
+    })
+  // Display preview img as background-image to allow easily proper
+  // scaling to fit into screen with retaining aspect-ratio
+    .directive('previewImg', function() {
+      return {
+        scope: {
+          previewImg: '@'
+        },
+        link: (scope, element) => {
+          scope.$watch('previewImg', () => {
+            let url = scope.previewImg.replace(/ /g, '%20');
+            element.css({
+              'background-image': 'url(' + url + ')'
+            });
+          });
         }
-        ctrl.slice(start, scope.stItemsByPage);
       };
-    }
-  };
-})
-// Display preview img as background-image to allow easily proper
-// scaling to fit into screen with retaining aspect-ratio
-.directive('previewImg', function() {
-  return {
-    scope: {
-      previewImg: '@'
-    },
-    link: (scope, element) => {
-      scope.$watch('previewImg', () => {
-        let url = scope.previewImg.replace(/ /g, '%20');
-        element.css({
-          'background-image': 'url(' + url + ')'
-        });
-      });
-    }
-  };
-})
-// Global keyboard handler, which works without requiring focus
-.directive('giAlbumKey', function() {
-  return {
-    restrict: 'E',
-    scope: {
-      keydown: '&keydown'
-    },
-    link: (scope) => {
-      jQuery(document).on("keydown", (event) => {
-        scope.$apply(scope.keydown({event: event}));
-      });
-    }
-  };
-});
+    })
+  // Global keyboard handler, which works without requiring focus
+    .directive('giAlbumKey', function() {
+      return {
+        restrict: 'E',
+        scope: {
+          keydown: '&keydown'
+        },
+        link: (scope) => {
+          jQuery(document).on("keydown", (event) => {
+            scope.$apply(scope.keydown({event: event}));
+          });
+        }
+      };
+    });
+}

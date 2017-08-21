@@ -4,8 +4,9 @@
 <% end %>
 
 <% content_for :javascripts do %>
-  <%= javascript_include_tag  "gi_album/engine" %>
-  <%= javascript_include_tag  "gi_album/album/module" %>
+  <%= javascript_include_tag  "gi_album/album/module_vendor", defer: true %>
+  <%= javascript_include_tag  "gi_album/album/module", defer: true %>
+  <%= javascript_include_tag  "gi_album/engine", defer: true %>
 <% end %>
 
 <% content_for :head do %>
