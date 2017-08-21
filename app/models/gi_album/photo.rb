@@ -84,11 +84,14 @@ module GiAlbum
 #      thumb.write(target_path)
 
       FileUtils.mkdir_p(File.dirname(target_path))
-      cmd = "convert -thumbnail #{size}x#{size} '#{full_path}' '#{target_path}'"
-      fork do
-        exec cmd
-      end
-      Process.wait
+      cmd = %(convert -thumbnail #{size}x#{size} "#{full_path.gsub(/"/, '\"')}" "#{target_path.gsub(/"/, '\"')}")
+      logger.info cmd
+
+      %x(#{cmd})
+      # fork do
+      #   exec cmd
+      # end
+      # Process.wait
 
       logger.info "created thumb: #{target_path}"
     end
@@ -106,9 +109,14 @@ module GiAlbum
     def self.fill_image_info(all_photos)
       all_photos.each_slice(50) do |photos|
         by_path = photos.index_by(&:full_path)
-        query_paths = '"' + photos.map(&:full_path).join('" "') + '"'
+        paths = photos.map do |e|
+          e.full_path.gsub(/"/, '\"')
+        end
+
+        query_paths = '"' + paths.join('" "') + '"'
         cmd = "identify #{query_paths}"
-        result = `#{cmd}`
+        logger.info cmd
+        result = %x(#{cmd})
 
         result.each_line do |line|
           data = line.split(' ')
