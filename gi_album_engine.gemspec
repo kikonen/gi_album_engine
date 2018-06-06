@@ -18,7 +18,8 @@ Gem::Specification.new do |s|
 
   s.add_dependency "rails", ">= 5.0"
   s.add_dependency "celluloid", ">= 0.17.0"
-  s.add_dependency "rmagick", ">= 2.15.0"
+# TODO KI rmagic not working with imagemagick 7
+#  s.add_dependency "rmagick", ">= 2.15.0"
   s.add_dependency "bower_vendor"
 
   s.add_development_dependency "sqlite3"

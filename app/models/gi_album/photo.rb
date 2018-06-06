@@ -1,4 +1,5 @@
-require 'rmagick'
+# TODO KI rmagic not working with imagemagick 7
+#require 'rmagick'
 
 module GiAlbum
   class Photo < Element
