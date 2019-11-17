@@ -6,7 +6,7 @@ end
 
 class GiAlbum::Engine
   def self.mount_path
-    "/#{parent.name.underscore}"
+    "/#{module_parent.name.underscore}"
   end
 end
 
